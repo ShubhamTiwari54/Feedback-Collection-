@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f6f8">
+  <title>EduVerse — Course Feedback</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" onclick="navigate('home'); return false;" aria-label="EduVerse home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M3 8.5 12 4l9 4.5-9 4.5L3 8.5Z" fill="currentColor"/><path d="M6 10.2v5.2c3.8 3.1 8.2 3.1 12 0v-5.2l-6 3-6-3Z" fill="currentColor" opacity=".65"/><path d="M21 9v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </span>
+        <span>EduVerse</span>
+      </a>
+
+      <button class="mobile-menu" id="menuToggle" aria-label="Toggle navigation">☰</button>
+
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a class="nav-link active" href="#" data-page="home">Home</a>
+        <a class="nav-link" href="#" data-page="courses">Courses</a>
+        <a class="nav-link" href="#" data-page="about">About</a>
+        <a class="nav-link" href="#" data-page="feedback">Feedback</a>
+      </nav>
+
+      <div class="topbar-actions">
+        <label class="search-mini" aria-label="Search courses">
+          <span>⌕</span>
+          <input id="navSearch" type="search" placeholder="Search courses...">
+        </label>
+        <button class="avatar" id="profileButton" title="Demo profile">S</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="page active" id="page-home">
+        <div class="hero">
+          <div class="hero-content">
+            <div class="eyebrow">Student feedback platform</div>
+            <h1>Better Courses<br>Build a <span>Better<br>Tomorrow</span></h1>
+            <p>Share your feedback on courses and faculty. Help us improve teaching, learning, and the overall academic experience.</p>
+            <div class="hero-actions">
+              <button class="btn btn-primary" onclick="navigate('courses')">Explore Courses <span>→</span></button>
+              <button class="btn btn-outline-light" onclick="navigate('feedback')">Give Feedback</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="benefits">
+          <div class="benefit"><div class="benefit-icon">♥</div><div><h3>Your Voice Matters</h3><p>Help improve course quality.</p></div></div>
+          <div class="benefit"><div class="benefit-icon">▣</div><div><h3>Support Better Teaching</h3><p>Share genuine feedback.</p></div></div>
+          <div class="benefit"><div class="benefit-icon">✦</div><div><h3>Build a Stronger Campus</h3><p>Contribute to a better learning environment.</p></div></div>
+          <div class="benefit"><div class="benefit-icon">↗</div><div><h3>It's Quick &amp; Simple</h3><p>Takes just a few minutes.</p></div></div>
+        </div>
+
+        <div class="page-panel" style="margin-top:25px">
+          <div class="heading-row">
+            <div><div class="section-kicker">Find your course</div><h2 class="page-heading">Your learning, your voice.</h2><p class="page-subtitle">Choose a course to share feedback with the people who teach it.</p></div>
+            <button class="btn btn-light" onclick="navigate('courses')">View all courses →</button>
+          </div>
+          <div class="course-grid" id="homeCourseGrid"></div>
+        </div>
+      </section>
+
+      <section class="page" id="page-courses">
+        <div class="page-panel">
+          <div class="heading-row">
+            <div><div class="section-kicker">Course directory</div><h1 class="page-heading">Explore Courses</h1><p class="page-subtitle">Select a course to view details and give your feedback.</p></div>
+            <span class="meta" id="courseCount">6 courses</span>
+          </div>
+          <div class="pill-row" id="categoryFilters">
+            <button class="pill active" data-category="All">All</button>
+            <button class="pill" data-category="Web Development">Web Development</button>
+            <button class="pill" data-category="Data Science">Data Science</button>
+            <button class="pill" data-category="AI & Machine Learning">AI &amp; ML</button>
+            <button class="pill" data-category="Cyber Security">Cyber Security</button>
+            <button class="pill" data-category="App Development">App Development</button>
+            <button class="pill" data-category="UI/UX Design">UI/UX Design</button>
+          </div>
+          <div class="course-grid" id="courseGrid"></div>
+        </div>
+      </section>
+
+      <section class="page" id="page-detail">
+        <div class="page-panel">
+          <button class="back-link" onclick="navigate('courses')">← Back to courses</button>
+          <div class="detail-layout">
+            <div id="courseInfo"></div>
+            <div class="feedback-card">
+              <h2>Give Your Feedback</h2>
+              <p>Your feedback helps improve the quality of this course and faculty.</p>
+              <form id="courseFeedbackForm">
+                <input type="hidden" id="selectedCourseId">
+                <div class="field">
+                  <label for="facultySelect">Select faculty</label>
+                  <select id="facultySelect" required>
+                    <option value="">Choose faculty member</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label>Teaching quality</label>
+                  <div class="rating-row"><div class="stars" data-rating="teaching"></div><span class="meta" id="teachingLabel">Choose 1–5</span></div>
+                </div>
+                <div class="field">
+                  <label>Course content</label>
+                  <div class="rating-row"><div class="stars" data-rating="content"></div><span class="meta" id="contentLabel">Choose 1–5</span></div>
+                </div>
+                <div class="field">
+                  <label>Clarity of concepts</label>
+                  <div class="rating-row"><div class="stars" data-rating="clarity"></div><span class="meta" id="clarityLabel">Choose 1–5</span></div>
+                </div>
+                <div class="field">
+                  <label>Overall experience</label>
+                  <div class="rating-row"><div class="stars" data-rating="overall"></div><span class="meta" id="overallLabel">Choose 1–5</span></div>
+                </div>
+                <div class="field">
+                  <label for="studentName">Your name</label>
+                  <input id="studentName" type="text" placeholder="Enter your name" maxlength="70" required>
+                </div>
+                <div class="field">
+                  <label for="studentEmail">Email address</label>
+                  <input id="studentEmail" type="email" placeholder="you@example.com" maxlength="120" required>
+                </div>
+                <div class="field">
+                  <label for="comments">Your comments <span style="font-weight:400;color:#8791a2">(optional)</span></label>
+                  <textarea id="comments" maxlength="700" placeholder="Share your experience or suggestions..."></textarea>
+                </div>
+                <button class="btn btn-primary submit-wide" type="submit">↗ Submit feedback</button>
+                <div class="form-message" id="formMessage" role="status"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="page-feedback">
+        <div class="page-panel">
+          <div class="feedback-intro">
+            <div><div class="section-kicker">Make an impact</div><h1 class="page-heading">Your feedback matters.</h1><p class="page-subtitle">Honest feedback helps faculty understand what's working and where students need more support. Select a course to get started.</p><button class="btn btn-primary" style="margin-top:19px" onclick="navigate('courses')">Choose a course →</button></div>
+            <div class="intro-note"><strong>A few minutes can make a difference.</strong><p>Rate teaching quality, course content, and clarity. Add a comment if you'd like to share more detail. Your feedback is stored in this browser for this demo.</p></div>
+          </div>
+          <div class="heading-row"><div><h2 class="page-heading" style="font-size:1.35rem">Recent feedback</h2><p class="page-subtitle">Feedback submitted in this browser.</p></div><span class="meta" id="feedbackCount">0 submissions</span></div>
+          <div class="feedback-list" id="feedbackList"></div>
+        </div>
+      </section>
+
+      <section class="page" id="page-about">
+        <div class="page-panel">
+          <div class="section-kicker">About EduVerse</div>
+          <h1 class="page-heading">Better learning starts with listening.</h1>
+          <p class="page-subtitle" style="max-width:760px;margin-bottom:28px">EduVerse is a course feedback concept designed to make student perspectives easier to share and easier for academic teams to review.</p>
+          <div class="benefits" style="margin:0;box-shadow:none">
+            <div class="benefit"><div class="benefit-icon">✓</div><div><h3>Simple feedback</h3><p>A clear, focused form for each course.</p></div></div>
+            <div class="benefit"><div class="benefit-icon">▥</div><div><h3>Useful insights</h3><p>Ratings summarized in a readable dashboard.</p></div></div>
+            <div class="benefit"><div class="benefit-icon">◷</div><div><h3>Quick to complete</h3><p>A short flow that respects student time.</p></div></div>
+            <div class="benefit"><div class="benefit-icon">◎</div><div><h3>Continuous improvement</h3><p>Feedback can inform better course delivery.</p></div></div>
+          </div>
+          <div class="intro-note" style="margin-top:24px"><strong>Prototype note</strong><p>This version uses browser localStorage. It is intended for a front-end demonstration and does not provide shared storage, secure authentication, or a real multi-user administrator system.</p></div>
+        </div>
+      </section>
+</main>
+
+    <footer>© <span id="year"></span> EduVerse · Course Feedback System</footer>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
